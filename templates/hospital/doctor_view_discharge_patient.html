@@ -1,0 +1,108 @@
+{% extends 'hospital/doctor_base.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <style>
+    .patient-card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(42, 92, 130, 0.1);
+      overflow: hidden;
+    }
+
+    .card-header {
+      background-color: var(--primary-medical);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .table-modern {
+      margin-bottom: 0;
+      border-collapse: separate;
+      border-spacing: 0 0.5rem;
+    }
+
+    .table-modern thead th {
+      background-color: var(--secondary-medical);
+      color: white;
+      border: none;
+      padding: 1rem 1.5rem;
+      font-weight: 500;
+    }
+
+    .table-modern tbody td {
+      background: white;
+      padding: 1.2rem 1.5rem;
+      vertical-align: middle;
+      border-bottom: 2px solid #f8f9fa;
+      transition: all 0.2s ease;
+    }
+
+    .table-modern tbody tr:hover td {
+      background: #f8fafc;
+      transform: translateX(4px);
+      box-shadow: 0 2px 12px rgba(42, 92, 130, 0.08);
+    }
+
+    .status-badge {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85em;
+      background: var(--accent-secondary);
+      color: white;
+    }
+
+    .patient-name {
+      font-weight: 600;
+      color: var(--primary-medical);
+    }
+  </style>
+</head>
+
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-12 col-xl-10">
+      <div class="patient-card">
+        <div class="card-header">
+          <h5 class="mb-1">Discharged Patients</h5>
+          <p class="mb-0 small opacity-75">Historical patient discharge records</p>
+        </div>
+        
+        <div class="table-responsive">
+          <table class="table table-modern">
+            <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Admission Date</th>
+                <th>Discharge Date</th>
+                <th>Condition</th>
+                <th>Contact</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in dischargedpatients %}
+              <tr>
+                <td>
+                  <span class="patient-name">{{p.patientName}}</span>
+                </td>
+                <td>{{p.admitDate}}</td>
+                <td>
+                  <span class="status-badge">{{p.releaseDate}}</span>
+                </td>
+                <td>{{p.symptoms}}</td>
+                <td>{{p.mobile}}</td>
+                <td>{{p.address}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

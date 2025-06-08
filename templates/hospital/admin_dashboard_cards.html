@@ -1,0 +1,243 @@
+{% load static %}
+<div class="dashboard-cards">
+  <div class="row g-4">
+    <!-- Doctor Card -->
+    <div class="col-xl-4 col-md-6">
+      <div class="card doctor-card">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h2 class="card-count">{{doctorcount}}</h2>
+              <h5 class="card-title">Total Doctors</h5>
+              <p class="card-subtitle">Approval Required: <span class="badge bg-warning">{{pendingdoctorcount}}</span></p>
+            </div>
+            <div class="col-4 text-end">
+              <div class="card-icon">
+                <i class="fas fa-user-md"></i>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="card-progress mt-3">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="progress-text">
+              <span>Active: 32</span>
+              <span>On Leave: 10</span>
+            </div>
+          </div> {% endcomment %}
+          <div class="card-footer mt-3">
+            <a href="/admin-doctor" class="card-link">View All Doctors <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Patient Card -->
+    <div class="col-xl-4 col-md-6">
+      <div class="card patient-card">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h2 class="card-count">{{patientcount}}</h2>
+              <h5 class="card-title">Total Patients</h5>
+              <p class="card-subtitle">Admission Requests: <span class="badge bg-warning">{{pendingpatientcount}}</span></p>
+            </div>
+            <div class="col-4 text-end">
+              <div class="card-icon">
+                <i class="fas fa-hospital-user"></i>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="card-progress mt-3">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="progress-text">
+              <span>Inpatient: 42</span>
+              <span>Outpatient: 145</span>
+            </div>
+          </div> {% endcomment %}
+          <div class="card-footer mt-3">
+            <a href="/admin-patient" class="card-link">View All Patients <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Appointment Card -->
+    <div class="col-xl-4 col-md-6">
+      <div class="card appointment-card">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h2 class="card-count">{{appointmentcount}}</h2>
+              <h5 class="card-title">Total Appointments</h5>
+              <p class="card-subtitle">Pending Approval: <span class="badge bg-warning">{{pendingappointmentcount}}</span></p>
+            </div>
+            <div class="col-4 text-end">
+              <div class="card-icon">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="card-progress mt-3">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="progress-text">
+              <span>Today: 24</span>
+              <span>Completed: 102</span>
+            </div>
+          </div> {% endcomment %}
+          <div class="card-footer mt-3">
+            <a href="/admin-appointment" class="card-link">View All Appointments <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dashboard-cards {
+    margin-bottom: 30px;
+  }
+  
+  .dashboard-cards .card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    transition: all 0.3s ease;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .dashboard-cards .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+  }
+  
+  .dashboard-cards .doctor-card {
+    border-top: 4px solid #2A5C82;
+  }
+  
+  .dashboard-cards .patient-card {
+    border-top: 4px solid #4CAF50;
+  }
+  
+  .dashboard-cards .appointment-card {
+    border-top: 4px solid #D32F2F;
+  }
+  
+  .card-body {
+    padding: 25px;
+  }
+  
+  .card-count {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #2A5C82;
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .card-subtitle {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0;
+  }
+  
+  .card-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+  }
+  
+  .doctor-card .card-icon {
+    background: rgba(42, 92, 130, 0.1);
+    color: #2A5C82;
+  }
+  
+  .patient-card .card-icon {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+  }
+  
+  .appointment-card .card-icon {
+    background: rgba(211, 47, 47, 0.1);
+    color: #D32F2F;
+  }
+  
+  .progress {
+    height: 8px;
+    border-radius: 4px;
+    background: #f0f0f0;
+  }
+  
+  .doctor-card .progress-bar {
+    background: #2A5C82;
+  }
+  
+  .patient-card .progress-bar {
+    background: #4CAF50;
+  }
+  
+  .appointment-card .progress-bar {
+    background: #D32F2F;
+  }
+  
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 5px;
+  }
+  
+  .card-footer {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 15px;
+  }
+  
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    color: #2A5C82;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  
+  .card-link i {
+    margin-left: 5px;
+    font-size: 0.8rem;
+    transition: transform 0.2s;
+  }
+  
+  .card-link:hover {
+    color: #1A3A4B;
+  }
+  
+  .card-link:hover i {
+    transform: translateX(3px);
+  }
+  
+  .badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+  }
+</style>

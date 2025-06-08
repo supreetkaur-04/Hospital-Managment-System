@@ -1,0 +1,182 @@
+{% extends 'hospital/patient_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-medical: #2A5C82;
+        --secondary-medical: #1A3A4B;
+        --accent-emergency: #D32F2F;
+        --accent-secondary: #4CAF50;
+        --text-primary: #2D3748;
+        --text-secondary: #718096;
+    }
+
+    .dashboard-container {
+        margin-top: 80px;
+        padding: 2rem;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .dashboard-title {
+        color: var(--primary-medical);
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 1rem;
+    }
+
+    .service-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent-secondary);
+    }
+
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--primary-medical);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-icon i {
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .card-title {
+        color: var(--primary-medical);
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .action-button {
+        background: var(--accent-secondary);
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .action-button:hover {
+        background: var(--secondary-medical);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(42,92,130,0.2);
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 1rem;
+            margin-top: 60px;
+        }
+        
+        .dashboard-title {
+            font-size: 2rem;
+        }
+        
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Patient Dashboard</h1>
+        <p class="text-muted">Manage your healthcare services efficiently</p>
+    </div>
+
+    <div class="grid-container">
+        <a href="/patient-view-appointment" class="service-card">
+            <div class="card-content">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3 class="card-title">Appointment Management</h3>
+                <p class="card-description">
+                    View and manage your upcoming medical appointments
+                </p>
+                <span class="action-button">
+                    <i class="fas fa-arrow-right"></i>
+                    Manage Appointments
+                </span>
+            </div>
+        </a>
+
+        <!-- Uncomment when ready -->
+        <!-- <a href="/patient-book-appointment" class="service-card">
+            <div class="card-content">
+                <div class="card-icon">
+                    <i class="fas fa-plus-square"></i>
+                </div>
+                <h3 class="card-title">Book New Appointment</h3>
+                <p class="card-description">
+                    Schedule new appointments with healthcare professionals
+                </p>
+                <span class="action-button">
+                    <i class="fas fa-arrow-right"></i>
+                    Book Appointment
+                </span>
+            </div>
+        </a> -->
+    </div>
+</div>
+
+<br><br><br><br>
+{% endblock content %}

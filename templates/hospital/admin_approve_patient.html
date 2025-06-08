@@ -1,0 +1,115 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <style>
+    .card-header {
+      background: linear-gradient(180deg, var(--primary-medical), var(--secondary-medical));
+      color: white;
+      border-radius: 12px 12px 0 0 !important;
+    }
+    
+    .symptoms-cell {
+      max-width: 250px;
+      white-space: normal;
+    }
+    
+    .profile-img {
+      width: 45px;
+      height: 45px;
+      object-fit: cover;
+      border: 2px solid var(--primary-medical);
+    }
+    
+    .action-btns .btn {
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .action-btns .btn-approve:hover {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+    
+    .action-btns .btn-reject:hover {
+      background-color: #dc3545;
+      border-color: #dc3545;
+    }
+  </style>
+</head>
+
+<div class="container-fluid px-4" style="padding-top: 30px;">
+  <div class="card shadow-lg border-0">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Patient Admission Requests</h4>
+      <small>{{ patients|length }} pending requests</small>
+    </div>
+    
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-4">Patient Name</th>
+              <th>Profile</th>
+              <th>Symptoms</th>
+              <th>Contact</th>
+              <th>Address</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in patients %}
+            <tr>
+              <td class="ps-4 fw-medium">{{ p.get_name }}</td>
+              <td>
+                <img src="{% static p.profile_pic.url %}" 
+                     alt="Profile" 
+                     class="profile-img rounded-circle">
+              </td>
+              <td class="symptoms-cell">{{ p.symptoms }}</td>
+              <td>{{ p.mobile }}</td>
+              <td>{{ p.address }}</td>
+              <td class="text-end pe-4 action-btns">
+                <a href="{% url 'approve-patient' p.id %}" 
+                   class="btn btn-success btn-approve me-2"
+                   data-bs-toggle="tooltip" 
+                   title="Approve Admission">
+                  <i class="fas fa-check"></i>
+                </a>
+                <a href="{% url 'reject-patient' p.id %}" 
+                   class="btn btn-danger btn-reject"
+                   data-bs-toggle="tooltip" 
+                   title="Reject Request">
+                  <i class="fas fa-times"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+      {% if not patients %}
+      <div class="text-center p-5">
+        <i class="fas fa-procedures fa-3x text-muted mb-3"></i>
+        <h5 class="text-muted">No pending admission requests</h5>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Initialize Bootstrap tooltips
+  document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  })
+</script>
+
+{% endblock content %}

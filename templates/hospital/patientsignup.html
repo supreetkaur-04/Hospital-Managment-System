@@ -1,0 +1,616 @@
+{% load static %}
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Patient Signup - Alpha Canis Hospital</title>
+  
+  <!-- Modern Dependencies -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-medical: #2A5C82;
+      --secondary-medical: #1A3A4B;
+      --accent-emergency: #D32F2F;
+      --accent-secondary: #4CAF50;
+      --light-bg: #f8f9fb;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8f9fb 0%, #eef5ff 100%);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 70px;
+    }
+
+    .signup-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 70px);
+      padding: 2rem;
+    }
+
+    .signup-card {
+      width: 100%;
+      {% comment %} max-width: 1000px; {% endcomment %}
+      border: none;
+      border-radius: 25px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 15px 50px rgba(42, 92, 130, 0.15);
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .signup-illustration {
+      background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .signup-form-container {
+      padding: 3rem;
+      flex: 1.5;
+      min-width: 300px;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-header h2 {
+      font-weight: 700;
+      color: var(--secondary-medical);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-header p {
+      color: var(--text-light);
+    }
+
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--secondary-medical);
+    }
+
+    .form-control {
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e0e7ff;
+      transition: all 0.3s ease;
+      height: auto;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-medical);
+      box-shadow: 0 0 0 4px rgba(42, 92, 130, 0.1);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-medical);
+      font-size: 1.1rem;
+      z-index: 4;
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-group input, 
+    .input-group select,
+    .input-group textarea {
+      padding-left: 55px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      cursor: pointer;
+      z-index: 4;
+    }
+
+    .btn-primary-medical {
+      background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      width: 100%;
+      font-size: 1.1rem;
+    }
+
+    .btn-primary-medical:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(42, 92, 130, 0.25);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: var(--text-light);
+    }
+
+    .form-footer a {
+      color: var(--primary-medical);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-footer a:hover {
+      color: var(--secondary-medical);
+      text-decoration: underline;
+    }
+
+    .password-strength {
+      height: 5px;
+      border-radius: 5px;
+      background: #e0e7ff;
+      margin-top: 0.5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .strength-meter {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: var(--accent-emergency);
+      transition: width 0.3s ease;
+    }
+
+    .password-rules {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .password-rules ul {
+      padding-left: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    .password-rules li {
+      margin-bottom: 0.25rem;
+    }
+
+    .password-rules .valid {
+      color: var(--accent-secondary);
+    }
+
+    .password-rules .valid::before {
+      content: "✓ ";
+    }
+
+    .password-rules .invalid::before {
+      content: "✗ ";
+    }
+
+    .illustration-img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 2rem;
+    }
+
+    .feature-list li {
+      margin-bottom: 1rem;
+      padding-left: 2rem;
+      position: relative;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-secondary);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .profile-preview {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      border: 4px solid var(--primary-medical);
+      background: #f0f5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .profile-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-preview i {
+      font-size: 3rem;
+      color: var(--primary-medical);
+    }
+
+    .profile-preview input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .symptoms-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .symptom-tag {
+      background: #e0e7ff;
+      border-radius: 20px;
+      padding: 5px 15px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .symptom-tag.selected {
+      background: var(--primary-medical);
+      color: white;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .signup-card {
+        flex-direction: column;
+      }
+      
+      .signup-illustration {
+        border-radius: 25px 25px 0 0;
+        padding: 2rem;
+      }
+      
+      .signup-form-container {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  {% include "hospital/navbar.html" %}
+  
+  <div class="signup-container">
+    <div class="signup-card shadow-lg">
+      <div class="signup-illustration">
+        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+             alt="Patient Care" class="illustration-img">
+        
+        <h2 class="text-white mb-3">Patient-Centered Care</h2>
+        <p class="text-center text-light mb-4">Join thousands of patients who trust us with their healthcare</p>
+        
+        <ul class="feature-list text-light">
+          <li>Easy appointment scheduling</li>
+          <li>Access to top medical specialists</li>
+          <li>Secure online medical records</li>
+          <li>24/7 patient portal access</li>
+          <li>Personalized treatment plans</li>
+        </ul>
+      </div>
+      
+      <div class="signup-form-container">
+        <div class="form-header">
+          <h2>Patient Registration</h2>
+          <p>Create your account to access our healthcare services</p>
+        </div>
+        
+        {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas fa-exclamation-circle me-2"></i>Please correct the errors below
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+          {% csrf_token %}
+          
+          <div class="text-center mb-4">
+            <div class="profile-preview">
+              <i class="fas fa-user"></i>
+              <img id="profilePreview" src="#" alt="Profile preview" style="display: none;">
+              {% render_field patientForm.profile_pic id="profileUpload" %}
+            </div>
+            <small class="text-muted">Click to upload profile picture</small>
+          </div>
+          
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="{{ userForm.first_name.id_for_label }}" class="form-label">First Name</label>
+              <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+              </div>
+              <div class="invalid-feedback">Please enter first name</div>
+            </div>
+            
+            <div class="col-md-6">
+              <label for="{{ userForm.last_name.id_for_label }}" class="form-label">Last Name</label>
+              <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+              </div>
+              <div class="invalid-feedback">Please enter last name</div>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="{{ userForm.username.id_for_label }}" class="form-label">Username</label>
+            <div class="input-group">
+              <i class="fas fa-user-circle input-icon"></i>
+              {% render_field userForm.username class="form-control" placeholder="Choose a username" %}
+            </div>
+            <div class="invalid-feedback">Please choose a username</div>
+          </div>
+          
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="{{ patientForm.mobile.id_for_label }}" class="form-label">Mobile Number</label>
+              <div class="input-group">
+                <i class="fas fa-mobile-alt input-icon"></i>
+                {% render_field patientForm.mobile class="form-control" placeholder="Phone number" %}
+              </div>
+              <div class="invalid-feedback">Please enter your mobile number</div>
+            </div>
+            
+            <div class="col-md-6">
+              <label for="{{ patientForm.assignedDoctorId.id_for_label }}" class="form-label">Preferred Doctor (Optional)</label>
+              <div class="input-group">
+                <i class="fas fa-user-md input-icon"></i>
+                {% render_field patientForm.assignedDoctorId class="form-control" %}
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="{{ patientForm.address.id_for_label }}" class="form-label">Address</label>
+            <div class="input-group">
+              <i class="fas fa-map-marker-alt input-icon"></i>
+              {% render_field patientForm.address class="form-control" placeholder="Full address" %}
+            </div>
+            <div class="invalid-feedback">Please enter your address</div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="{{ patientForm.symptoms.id_for_label }}" class="form-label">Symptoms</label>
+            <div class="input-group">
+              <i class="fas fa-notes-medical input-icon"></i>
+              {% render_field patientForm.symptoms class="form-control" placeholder="Describe your symptoms" rows="2" %}
+            </div>
+            <div class="symptoms-group">
+              <span class="symptom-tag">Fever</span>
+              <span class="symptom-tag">Headache</span>
+              <span class="symptom-tag">Cough</span>
+              <span class="symptom-tag">Nausea</span>
+              <span class="symptom-tag">Fatigue</span>
+              <span class="symptom-tag">Pain</span>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="{{ userForm.password.id_for_label }}" class="form-label">Password</label>
+            <div class="input-group">
+              <i class="fas fa-lock input-icon"></i>
+              {% render_field userForm.password class="form-control" placeholder="Create a strong password" id="password" %}
+              <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+            </div>
+            <div class="password-strength mt-2">
+              <div class="strength-meter" id="strengthMeter"></div>
+            </div>
+            <div class="password-rules">
+              <ul>
+                <li class="invalid" id="length">At least 8 characters</li>
+                <li class="invalid" id="uppercase">Uppercase letter</li>
+                <li class="invalid" id="lowercase">Lowercase letter</li>
+                <li class="invalid" id="number">Number</li>
+                <li class="invalid" id="special">Special character</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <div class="input-group">
+              <i class="fas fa-lock input-icon"></i>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+              <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+            </div>
+            <div class="invalid-feedback" id="confirmFeedback">Passwords must match</div>
+          </div>
+          
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="terms" required>
+            <label class="form-check-label" for="terms">
+              I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
+            </label>
+            <div class="invalid-feedback">You must agree before submitting</div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary-medical" style="color:white;">
+            <i class="fas fa-user-plus me-2"></i>Create Patient Account
+          </button>
+          
+          <div class="form-footer">
+            <p class="mb-0">Already have an account? <a href="patientlogin">Sign in here</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Password visibility toggle
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+    const confirmPassword = document.querySelector('#confirmPassword');
+    
+    togglePassword.addEventListener('click', function() {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+    });
+    
+    toggleConfirmPassword.addEventListener('click', function() {
+      const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+      confirmPassword.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+    });
+    
+    // Password strength checker
+    password.addEventListener('input', function() {
+      const value = password.value;
+      const strengthMeter = document.getElementById('strengthMeter');
+      const rules = {
+        length: value.length >= 8,
+        uppercase: /[A-Z]/.test(value),
+        lowercase: /[a-z]/.test(value),
+        number: /[0-9]/.test(value),
+        special: /[^A-Za-z0-9]/.test(value)
+      };
+      
+      // Update strength meter
+      const strength = Object.values(rules).filter(Boolean).length;
+      strengthMeter.style.width = `${strength * 20}%`;
+      strengthMeter.style.background = strength < 2 ? '#D32F2F' : 
+                                       strength < 4 ? '#FF9800' : '#4CAF50';
+      
+      // Update rules display
+      for (const rule in rules) {
+        const element = document.getElementById(rule);
+        if (rules[rule]) {
+          element.classList.remove('invalid');
+          element.classList.add('valid');
+        } else {
+          element.classList.remove('valid');
+          element.classList.add('invalid');
+        }
+      }
+    });
+    
+    // Password confirmation validation
+    confirmPassword.addEventListener('input', function() {
+      const passwordValue = password.value;
+      const confirmValue = confirmPassword.value;
+      const feedback = document.getElementById('confirmFeedback');
+      
+      if (confirmValue && passwordValue !== confirmValue) {
+        confirmPassword.setCustomValidity("Passwords don't match");
+        feedback.style.display = 'block';
+      } else {
+        confirmPassword.setCustomValidity('');
+        feedback.style.display = 'none';
+      }
+    });
+    
+    // Profile picture preview
+    const profileUpload = document.getElementById('profileUpload');
+    const profilePreview = document.getElementById('profilePreview');
+    
+    profileUpload.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          profilePreview.src = e.target.result;
+          profilePreview.style.display = 'block';
+          document.querySelector('.profile-preview i').style.display = 'none';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    // Symptom tag selection
+    const symptomTags = document.querySelectorAll('.symptom-tag');
+    const symptomsField = document.querySelector('#{{ patientForm.symptoms.id_for_label }}');
+    
+    symptomTags.forEach(tag => {
+      tag.addEventListener('click', function() {
+        this.classList.toggle('selected');
+        
+        let currentSymptoms = symptomsField.value || '';
+        const symptomText = this.textContent.trim();
+        
+        if (this.classList.contains('selected')) {
+          // Add symptom if not already present
+          if (!currentSymptoms.includes(symptomText)) {
+            currentSymptoms += (currentSymptoms ? ', ' : '') + symptomText;
+          }
+        } else {
+          // Remove symptom
+          currentSymptoms = currentSymptoms
+            .split(',')
+            .map(s => s.trim())
+            .filter(s => s !== symptomText)
+            .join(', ');
+        }
+        
+        symptomsField.value = currentSymptoms;
+      });
+    });
+    
+    // Form validation
+    (function () {
+      'use strict'
+      const forms = document.querySelectorAll('.needs-validation')
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+  </script>
+</body>
+</html>

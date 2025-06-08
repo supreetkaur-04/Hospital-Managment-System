@@ -1,0 +1,149 @@
+{% extends 'hospital/doctor_base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --primary-medical: #2A5C82;
+      --secondary-medical: #1A3A4B;
+      --accent-emergency: #D32F2F;
+      --accent-secondary: #4CAF50;
+      --text-primary: #2D3748;
+      --text-secondary: #718096;
+    }
+
+    .dashboard-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(42, 92, 130, 0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(42, 92, 130, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(42, 92, 130, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+    }
+
+    .card-icon i {
+      font-size: 1.5rem;
+      color: var(--primary-medical);
+    }
+
+    .card-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      color: var(--primary-medical);
+      margin-bottom: 0;
+      font-size: 1.25rem;
+    }
+
+    .card-action {
+      text-align: right;
+    }
+
+    .btn-medical {
+      background: var(--primary-medical);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-medical:hover {
+      background: var(--secondary-medical);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(42, 92, 130, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-card {
+        margin-bottom: 1.5rem;
+      }
+      
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .card-icon {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<div class="container py-5">
+  <div class="row">
+    <!-- View Appointments Card -->
+    <div class="col-lg-6 mb-4">
+      <a href="/doctor-view-appointment" class="dashboard-card text-decoration-none">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <h3 class="card-title">Appointment Management</h3>
+        </div>
+        <p class="text-muted mb-4">
+          Review and manage upcoming patient appointments. Check detailed schedules and patient histories.
+        </p>
+        <div class="card-action">
+          <span class="btn-medical">View Appointments →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Delete Appointments Card -->
+    <div class="col-lg-6 mb-4">
+      <a href="/doctor-delete-appointment" class="dashboard-card text-decoration-none">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-calendar-times"></i>
+          </div>
+          <h3 class="card-title">Appointment Cancellation</h3>
+        </div>
+        <p class="text-muted mb-4">
+          Cancel or reschedule appointments when necessary. Manage your availability and time slots.
+        </p>
+        <div class="card-action">
+          <span class="btn-medical">Manage Cancellations →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Additional Cards can be added here following the same pattern -->
+    
+  </div>
+</div>
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+
+{% endblock content %}

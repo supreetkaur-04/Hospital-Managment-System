@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS - Patient Portal</title>
+    
+    <!-- Theme Colors -->
+    <style>:root {
+        --primary-medical: #2A5C82;
+        --secondary-medical: #1A3A4B;
+        --accent-emergency: #D32F2F;
+        --accent-secondary: #4CAF50;
+        --text-primary: #2D3748;
+        --text-secondary: #718096;
+        --glass-bg: rgba(255, 255, 255, 0.1);
+    }</style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #f8f9fa;
+            color: var(--text-primary);
+            padding-left: 240px;
+            transition: padding 0.3s ease;
+        }
+
+        /* Enhanced Side Navigation */
+        .side-nav {
+            background: linear-gradient(180deg, var(--primary-medical), var(--secondary-medical));
+            backdrop-filter: blur(10px);
+            height: 100vh;
+            width: 240px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 4px 0 25px rgba(0,0,0,0.1);
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .profile-section {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modern Nav Items */
+        .nav-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            padding: 1rem 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            margin: 0 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent-secondary);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(8px);
+        }
+
+        .nav-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-link i {
+            width: 25px;
+            font-size: 1.3rem;
+            color: var(--accent-secondary);
+        }
+
+        /* Modern Top Navigation */
+        .main-navbar {
+            background: linear-gradient(90deg, var(--primary-medical), var(--secondary-medical)) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            height: 72px;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            font-size: 1.25rem;
+        }
+
+        .brand-logo {
+            width: 45px;
+            margin-right: 15px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        /* Enhanced Content Area */
+        .container-fluid.p-4 {
+            padding: 2.5rem !important;
+        }
+
+        /* Modern Button Styles */
+        .btn-light {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-light:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Responsive Design Enhancements */
+        @media (max-width: 992px) {
+            body {
+                padding-left: 0;
+            }
+
+            .side-nav {
+                transform: translateX(-100%);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .side-nav.active {
+                transform: translateX(0);
+                box-shadow: 4px 0 25px rgba(0,0,0,0.2);
+            }
+
+            .mobile-menu-btn {
+                color: white !important;
+            }
+
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        main {
+            animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Side Navigation -->
+    <nav class="side-nav">
+        <div class="profile-section">
+            <img src="{% static patient.profile_pic.url %}" alt="Profile" class="profile-img">
+            <h5 class="text-white mb-1">{{request.user.first_name}}</h5>
+            <small class="text-light" style="opacity: 0.8;">Patient Account</small>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="/patient-dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/patient-appointment">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Appointments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/patient-discharge">
+                    <i class="fas fa-file-medical"></i>
+                    <span>Discharge</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-expand-lg main-navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler d-lg-none mobile-menu-btn text-white" type="button">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a class="navbar-brand text-white" href="#">
+                    <img src="{% static 'hospital/img/logo-white.png' %}" alt="Logo" class="brand-logo">
+                    HOSPITAL MANAGEMENT
+                </a>
+                
+                <div class="collapse navbar-collapse justify-content-end">
+                    <div class="navbar-nav">
+                        <a href="/logout" class="btn btn-light">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content Section -->
+        <div class="container-fluid p-4">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        // Enhanced Mobile Menu Toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            const sideNav = document.querySelector('.side-nav');
+            sideNav.classList.toggle('active');
+            document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Smooth Transitions
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if(window.innerWidth < 992) {
+                    document.querySelector('.side-nav').classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

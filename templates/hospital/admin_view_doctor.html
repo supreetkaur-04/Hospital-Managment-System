@@ -1,0 +1,146 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container-fluid px-4" style="padding-top: 30px;">
+  <div class="card shadow-lg border-0">
+    <div class="card-header gradient-bg d-flex justify-content-between align-items-center">
+      <h4 class="mb-0 text-white">
+        <i class="fas fa-user-md me-3"></i>Medical Practitioners
+      </h4>
+      <span class="badge bg-light text-primary">{{ doctors|length }} Registered Professionals</span>
+    </div>
+    
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-4">Practitioner</th>
+              <th>Profile</th>
+              <th>Contact</th>
+              <th>Department</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for d in doctors %}
+            <tr>
+              <td class="ps-4 fw-medium">{{ d.get_name }}</td>
+              <td>
+                <img src="{% static d.profile_pic.url %}" 
+                     alt="Profile" 
+                     class="profile-img rounded-circle">
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <span>{{ d.mobile }}</span>
+                  <small class="text-muted">{{ d.address }}</small>
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-primary-medical">{{ d.department }}</span>
+              </td>
+              <td class="text-end pe-4">
+                <div class="d-flex gap-2 justify-content-end">
+                  <a href="{% url 'update-doctor' d.id %}" 
+                     class="btn btn-sm btn-outline-primary-medical"
+                     data-bs-toggle="tooltip" 
+                     title="Edit Profile">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <button type="button" 
+                          class="btn btn-sm btn-outline-danger" 
+                          data-bs-toggle="modal" 
+                          data-bs-target="#deleteModal{{ d.id }}"
+                          title="Remove Practitioner">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            
+            <!-- Delete Confirmation Modal -->
+            <div class="modal fade" id="deleteModal{{ d.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="deleteModalLabel">
+                      <i class="fas fa-exclamation-triangle me-2"></i>Confirm Removal
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to permanently remove<br>
+                    <strong>Dr. {{ d.get_name }}</strong> from the system?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="{% url 'delete-doctor-from-hospital' d.id %}" class="btn btn-danger">
+                      Confirm Removal
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+        {% if not doctors %}
+        <div class="text-center p-5">
+          <i class="fas fa-user-md fa-3x text-muted mb-3"></i>
+          <h5 class="text-muted">No Medical Practitioners Registered</h5>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+    border-radius: 12px 12px 0 0 !important;
+  }
+
+  .profile-img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border: 2px solid var(--primary-medical);
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: rgba(42, 92, 130, 0.03);
+  }
+
+  .badge.bg-primary-medical {
+    background-color: var(--primary-medical);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+  }
+
+  .btn-outline-primary-medical {
+    color: var(--primary-medical);
+    border-color: var(--primary-medical);
+  }
+
+  .btn-outline-primary-medical:hover {
+    background-color: var(--primary-medical);
+    color: white;
+  }
+</style>
+
+<script>
+  // Initialize Bootstrap tooltips
+  document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  })
+</script>
+
+{% endblock content %}

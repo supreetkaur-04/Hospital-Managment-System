@@ -1,0 +1,122 @@
+{% extends 'hospital/homebase.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-medical: #2A5C82;
+        --secondary-medical: #1A3A4B;
+        --accent-emergency: #D32F2F;
+        --accent-secondary: #4CAF50;
+        --text-primary: #2D3748;
+        --text-secondary: #718096;
+    }
+
+    .doctor-portal {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 2rem 0;
+    }
+
+    .portal-card {
+        background: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .portal-header {
+        background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+        color: white;
+        padding: 3rem 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .portal-header h1 {
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+    }
+
+    .portal-body {
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+
+    .portal-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-doctor {
+        padding: 1.2rem 2.5rem;
+        border-radius: 0.75rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        border: 2px solid transparent;
+    }
+
+    .btn-apply {
+        background: var(--accent-secondary);
+        color: white;
+    }
+
+    .btn-login {
+        background: var(--primary-medical);
+        color: white;
+    }
+
+    .btn-doctor:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn-apply:hover {
+        background: #45a049;
+    }
+
+    .btn-login:hover {
+        background: #1F4A63;
+    }
+
+    .icon {
+        font-size: 1.2rem;
+    }
+</style>
+
+<div class="doctor-portal">
+    <div class="portal-card">
+        <div class="portal-header">
+            <h1>Welcome, Medical Practitioner</h1>
+            <p class="lead">Hospital Management System Portal</p>
+        </div>
+        <div class="portal-body">
+            <div class="portal-buttons">
+                <a href="/doctorsignup" class="btn-doctor btn-apply">
+                    <i class="fas fa-clipboard-list icon"></i>
+                    Join Our Team
+                </a>
+                <a href="/doctorlogin" class="btn-doctor btn-login">
+                    <i class="fas fa-arrow-right-to-bracket icon"></i>
+                    Access Portal
+                </a>
+            </div>
+            <hr class="my-4">
+            <p class="text-muted mb-0">
+                Secure access to patient management and hospital resources
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

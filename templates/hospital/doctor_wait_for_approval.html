@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HMS - Account Pending</title>
+
+  <style media="screen">
+    :root {
+      --primary-medical: #2A5C82;
+      --secondary-medical: #1A3A4B;
+      --accent-emergency: #D32F2F;
+      --accent-secondary: #4CAF50;
+      --text-primary: #2D3748;
+      --text-secondary: #718096;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .status-card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: none;
+      max-width: 800px;
+      margin: auto;
+      transform: translateY(-2rem);
+    }
+
+    .status-header {
+      background: var(--primary-medical);
+      color: white;
+      border-radius: 1rem 1rem 0 0;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-header::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      background: var(--primary-medical);
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .status-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    .status-content {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .lead-text {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .btn-logout {
+      background: var(--primary-medical);
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      font-weight: 500;
+    }
+
+    .btn-logout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(42,92,130,0.2);
+      border-color: var(--secondary-medical);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+  </style>
+</head>
+
+<body>
+  {% include "hospital/navbar.html" %}
+  
+  <div class="container flex-grow-1 d-flex align-items-center">
+    <div class="w-100">
+      <div class="status-card">
+        <div class="status-header">
+          <i class="fas fa-hourglass-half status-icon"></i>
+          <h1 class="h3 mb-0">Hello, {{request.user.first_name}}</h1>
+        </div>
+        <div class="status-content">
+          <p class="lead-text">
+            Your account is currently under review by our administration team.<br>
+            We're carefully verifying credentials to ensure the highest standards of care.<br>
+            You'll receive notification via email once your account is approved.
+          </p>
+          <div class="d-flex justify-content-center gap-3">
+            <a href="/logout" class="btn-logout">
+              <i class="fas fa-sign-out-alt mr-2"></i>Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include "hospital/footer.html" %}
+
+  <!-- Scripts -->
+  <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
+</body>
+</html>

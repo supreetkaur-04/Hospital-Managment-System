@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Medical Dashboard</title>
+  <style>
+    /* Updated Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Card Alignment Fixes */
+    .medical-card {
+        height: 180px;
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+    }
+
+    .card-content {
+        width: 100%;
+        gap: 1.2rem;
+    }
+
+    .icon-wrapper {
+        width: 70px;
+        height: 70px;
+    }
+
+    .card-text {
+        flex: 1;
+    }
+
+    .card-text h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .card-text h4 {
+        font-size: 1rem;
+    }
+
+    /* Color Consistency Fixes */
+    .card-special {
+        background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+    }
+
+    .card-secondary {
+        background: linear-gradient(135deg, var(--accent-secondary), #388E3C);
+    }
+
+    .card-emergency {
+        background: linear-gradient(135deg, var(--accent-emergency), #B71C1C);
+    }
+
+    /* Remove rotating gradient background */
+    .medical-card::before {
+        content: none;
+    }
+
+    /* Add consistent hover effect */
+    .medical-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1200px) {
+        .dashboard-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .medical-card {
+            height: auto;
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<body>
+  <div class="dashboard-grid">
+    <!-- Doctor Card -->
+    <div class="medical-card card-special">
+      <div class="card-content">
+        <div class="icon-wrapper">
+          <i class="icon fas fa-user-md"></i>
+        </div>
+        <div class="card-text">
+          <h3>Dr. Rajinder Singh</h3>
+          <h4>Primary Physician</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Symptoms Card -->
+    <div class="medical-card card-secondary">
+      <div class="card-content">
+        <div class="icon-wrapper">
+          <i class="icon fas fa-notes-medical"></i>
+        </div>
+        <div class="card-text">
+          <h3>Fever, Cough</h3>
+          <h4>Diagnosed Symptoms</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Card -->
+    <div class="medical-card card-special">
+      <div class="card-content">
+        <div class="icon-wrapper">
+          <i class="icon fas fa-mobile-alt"></i>
+        </div>
+        <div class="card-text">
+          <h3>9914666499</h3>
+          <h4>Direct Contact</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Card -->
+    <div class="medical-card card-emergency">
+      <div class="card-content">
+        <div class="icon-wrapper">
+          <i class="icon fas fa-map-marker-alt"></i>
+        </div>
+        <div class="card-text">
+          <h3>New Mohini Park</h3>
+          <h4>Practice Location</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Department Card -->
+    <div class="medical-card card-special">
+      <div class="card-content">
+        <div class="icon-wrapper">
+          <i class="icon fas fa-stethoscope"></i>
+        </div>
+        <div class="card-text">
+          <h3>Emergency Medicine</h3>
+          <h4>Medical Specialty</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admission Card -->
+    <div class="medical-card card-secondary">
+      <div class="card-content">
+        <div class="icon-wrapper">
+          <i class="icon fas fa-calendar-check"></i>
+        </div>
+        <div class="card-text">
+          <h3>May 27, 2025</h3>
+          <h4>Admission Date</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

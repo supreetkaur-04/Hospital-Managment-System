@@ -1,0 +1,186 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+  <style>
+    :root {
+      --primary-medical: #2A5C82;
+      --secondary-medical: #1A3A4B;
+      --accent-emergency: #D32F2F;
+      --accent-secondary: #4CAF50;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      padding-top: 80px; /* Offset for fixed navbar */
+      background: linear-gradient(rgba(242, 247, 249, 0.9), 
+                  rgba(242, 247, 249, 0.9)),
+                  url("{{ bg_image_url }}");
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+    .register-form {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .form-header {
+      background: var(--primary-medical);
+      color: white;
+      border-radius: 15px 15px 0 0;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' d='M0,160L80,138.7C160,117,320,75,480,80C640,85,800,139,960,138.7C1120,139,1280,85,1360,58.7L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'/%3E%3C/svg%3E");
+      background-size: cover;
+    }
+
+    .form-header h3 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      margin: 0;
+      font-size: 1.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-content {
+      padding: 40px;
+      border-radius: 0 0 15px 15px;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      padding: 15px 20px 15px 50px;
+      border: 2px solid #e0e6ef;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      height: auto;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-medical);
+      box-shadow: 0 0 0 3px rgba(42, 92, 130, 0.1);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-medical);
+      z-index: 2;
+    }
+
+    .btn-submit {
+      background: var(--primary-medical);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(42, 92, 130, 0.3);
+      background: var(--secondary-medical);
+    }
+
+    @media (max-width: 768px) {
+      .register-form {
+        padding: 15px;
+      }
+      .form-content {
+        padding: 25px;
+      }
+      .form-control {
+        padding-left: 45px;
+      }
+    }
+  </style>
+</head>
+
+<div class="register-form">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-header">
+      <h3>Register New Doctor</h3>
+    </div>
+    <div class="form-content">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <i class="fas fa-user input-icon"></i>
+            {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+          </div>
+          <div class="form-group">
+            <i class="fas fa-at input-icon"></i>
+            {% render_field userForm.username class="form-control" placeholder="Username" %}
+          </div>
+          <div class="form-group">
+            <i class="fas fa-clinic-medical input-icon"></i>
+            {% render_field doctorForm.department class="form-control" placeholder="Department" %}
+          </div>
+          <div class="form-group">
+            <i class="fas fa-map-marker-alt input-icon"></i>
+            {% render_field doctorForm.address class="form-control" placeholder="Address" %}
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <i class="fas fa-user input-icon"></i>
+            {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+          </div>
+          <div class="form-group">
+            <i class="fas fa-lock input-icon"></i>
+            {% render_field userForm.password class="form-control" placeholder="Password" %}
+          </div>
+          <div class="form-group">
+            <i class="fas fa-phone input-icon"></i>
+            {% render_field doctorForm.mobile class="form-control" placeholder="Contact Number" %}
+          </div>
+          <div class="form-group">
+            <i class="fas fa-camera input-icon"></i>
+            {% render_field doctorForm.profile_pic class="form-control" %}
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-user-plus mr-2"></i>Register Doctor
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Required Scripts -->
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+{% endblock content %}

@@ -1,0 +1,256 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMS - Doctor Dashboard</title>
+
+  <!-- Theme Colors -->
+  <style>:root {
+    --primary-medical: #2A5C82;
+    --secondary-medical: #1A3A4B;
+    --accent-emergency: #D32F2F;
+    --accent-secondary: #4CAF50;
+    --text-primary: #2D3748;
+    --text-secondary: #718096;
+  }</style>
+
+  <!-- Bootstrap -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--text-primary);
+      background: #f8f9fa;
+      padding-left: 240px;
+    }
+
+    /* Side Navigation */
+    .side-nav {
+      background: var(--primary-medical);
+      height: 100vh;
+      width: 240px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 2px 0 15px rgba(0,0,0,0.1);
+    }
+
+    .profile-section {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding: 1rem 0;
+    }
+
+    .nav-item {
+      padding: 1rem 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .nav-link {
+      color: white !important;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-link i {
+      width: 25px;
+      font-size: 1.2rem;
+    }
+
+    /* Main Content */
+    main {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Top Navigation */
+    .main-navbar {
+      background: var(--primary-medical) !important;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Footer */
+    .main-footer {
+      background: var(--secondary-medical);
+      color: white;
+      padding: 2rem 0;
+      margin-top: auto;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      body {
+        padding-left: 0;
+      }
+
+      .side-nav {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .side-nav.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-btn {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Side Navigation -->
+  <nav class="side-nav">
+    <div class="profile-section">
+      <div class="profile-section">
+        {% if doctor.profile_pic and doctor.profile_pic.name %}
+          <img src="{{ doctor.profile_pic.url }}" alt="Profile" class="profile-img">
+        {% else %}
+          <img src="{% static 'images/default-avatar.png' %}" alt="Profile" class="profile-img">
+        {% endif %}
+        <h5 class="text-white mb-1">Dr. {{ request.user.first_name }}</h5>
+        <small class="text-light">Medical Practitioner</small>
+      </div>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a class="nav-link" href="/doctor-dashboard">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/doctor-patient">
+          <i class="fas fa-user-injured"></i>
+          <span>Patients</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/doctor-appointment">
+          <i class="fas fa-calendar-check"></i>
+          <span>Appointments</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Top Navigation -->
+    <nav class="navbar navbar-expand-lg main-navbar">
+      <div class="container-fluid">
+        <button class="navbar-toggler d-lg-none mobile-menu-btn" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand text-white" href="#">HOSPITAL MANAGEMENT</a>
+        
+        <div class="collapse navbar-collapse justify-content-end">
+          <div class="navbar-nav">
+            <a href="/logout" class="btn btn-light btn-sm">
+              <i class="fas fa-sign-out-alt mr-2"></i>Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Content Section -->
+    <div class="container-fluid p-4">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  {% comment %} {% include "hospital/footer.html" %} {% endcomment %}
+
+
+    <!-- Footer -->
+    {% comment %} <footer class="main-footer">
+      <div class="container text-center">
+        <div class="social-links">
+          <a href="#" class="social-icon text-white">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-icon text-white">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="social-icon text-white">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-icon text-white">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <p class="mb-0">© 2024 Hospital Management System</p>
+        <small>Developed by Rajsavi</small>
+      </div>
+    </footer> {% endcomment %}
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    // Mobile menu toggle
+    document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+      document.querySelector('.side-nav').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

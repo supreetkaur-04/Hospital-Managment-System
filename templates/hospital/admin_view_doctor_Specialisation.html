@@ -1,0 +1,88 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+
+<div class="container-fluid px-4" style="padding-top: 30px;">
+  <div class="card shadow-lg border-0">
+    <div class="card-header gradient-bg d-flex justify-content-between align-items-center">
+      <h4 class="mb-0 text-white">
+        <i class="fas fa-clinic-medical me-3"></i>Medical Departments & Practitioners
+      </h4>
+      <span class="badge bg-light text-primary">{{ doctors|length }} Medical Professionals</span>
+    </div>
+    
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-4">Medical Department</th>
+              <th>Practitioner</th>
+              <th class="text-center">Contact Information</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for d in doctors %}
+            <tr class="clickable-row" data-href="#">
+              <td class="ps-4">
+                <span class="badge bg-primary-medical">
+                  {{ d.department }}
+                </span>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-user-md text-primary-medical me-3"></i>
+                  <div>
+                    <h6 class="mb-0">{{ d.get_name }}</h6>
+                    <small class="text-muted">Medical ID: {{ d.id }}</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-center">
+                <a href="tel:{{ d.mobile }}" class="text-decoration-none">
+                  <i class="fas fa-phone-alt me-2 text-primary-medical"></i>
+                  {{ d.mobile }}
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+        {% if not doctors %}
+        <div class="text-center p-5">
+          <i class="fas fa-user-md fa-3x text-muted mb-3"></i>
+          <h5 class="text-muted">No Medical Professionals Registered</h5>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+    border-radius: 12px 12px 0 0 !important;
+  }
+
+  .clickable-row:hover {
+    background-color: rgba(42, 92, 130, 0.03);
+    cursor: pointer;
+    transform: scale(1.005);
+    transition: all 0.2s ease;
+  }
+
+  .badge.bg-primary-medical {
+    background-color: var(--primary-medical);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+
+  .table-hover tbody tr {
+    border-bottom: 2px solid #f8f9fa;
+  }
+</style>
+
+{% endblock content %}

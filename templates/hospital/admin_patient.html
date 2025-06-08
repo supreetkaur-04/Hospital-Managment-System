@@ -1,0 +1,132 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid px-4" style="padding-top: 30px;">
+  <div class="row g-4">
+    <!-- Patient Records Card -->
+    <div class="col-xl-3 col-md-6">
+      <div class="card shadow-lg border-0 h-100 hover-lift">
+        <div class="card-header gradient-patient-records d-flex align-items-center">
+          <i class="fas fa-file-medical fa-3x text-white me-3"></i>
+          <div>
+            <h5 class="text-white mb-0">Patient Records</h5>
+            <small class="text-white opacity-75">Medical History & Documents</small>
+          </div>
+        </div>
+        <div class="card-body">
+          <a href="/admin-view-patient" class="stretched-link">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="btn btn-sm btn-outline-primary-medical">Manage Records</span>
+              <i class="fas fa-arrow-right text-primary-medical"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admit Patient Card -->
+    <div class="col-xl-3 col-md-6">
+      <div class="card shadow-lg border-0 h-100 hover-lift">
+        <div class="card-header gradient-admit-patient d-flex align-items-center">
+          <i class="fas fa-hospital-user fa-3x text-white me-3"></i>
+          <div>
+            <h5 class="text-white mb-0">Admit Patient</h5>
+            <small class="text-white opacity-75">New Admission Process</small>
+          </div>
+        </div>
+        <div class="card-body">
+          <a href="/admin-add-patient" class="stretched-link">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="btn btn-sm btn-outline-accent-emergency">Start Admission</span>
+              <i class="fas fa-arrow-right text-accent-emergency"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Approvals Card -->
+    <div class="col-xl-3 col-md-6">
+      <div class="card shadow-lg border-0 h-100 hover-lift">
+        <div class="card-header gradient-approvals d-flex align-items-center">
+          <i class="fas fa-clipboard-check fa-3x text-white me-3"></i>
+          <div>
+            <h5 class="text-white mb-0">Patient Approvals</h5>
+            <small class="text-white opacity-75">Pending Applications</small>
+          </div>
+        </div>
+        <div class="card-body">
+          <a href="/admin-approve-patient" class="stretched-link">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="btn btn-sm btn-outline-success">Review Requests</span>
+              <i class="fas fa-arrow-right text-success"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discharge Card -->
+    <div class="col-xl-3 col-md-6">
+      <div class="card shadow-lg border-0 h-100 hover-lift">
+        <div class="card-header gradient-discharge d-flex align-items-center">
+          <i class="fas fa-sign-out-alt fa-3x text-white me-3"></i>
+          <div>
+            <h5 class="text-white mb-0">Patient Discharge</h5>
+            <small class="text-white opacity-75">Release Management</small>
+          </div>
+        </div>
+        <div class="card-body">
+          <a href="/admin-discharge-patient" class="stretched-link">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="btn btn-sm btn-outline-danger">Process Discharge</span>
+              <i class="fas fa-arrow-right text-danger"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .stretched-link,
+  .stretched-link:hover,
+  .stretched-link:focus {
+    text-decoration: none;
+  }
+
+  .hover-lift {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(42, 92, 130, 0.1);
+  }
+
+  .gradient-patient-records {
+    background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+  }
+
+  .gradient-admit-patient {
+    background: linear-gradient(135deg, #2ed8b6, #1A3A4B);
+  }
+
+  .gradient-approvals {
+    background: linear-gradient(135deg, #4CAF50, #2A5C82);
+  }
+
+  .gradient-discharge {
+    background: linear-gradient(135deg, #FF5370, #D32F2F);
+  }
+
+  .card-header {
+    border-radius: 12px 12px 0 0 !important;
+    padding: 1.5rem;
+  }
+</style>
+
+{% endblock content %}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 1cm;
+
+      @frame footer {
+        -pdf-frame-content: footerContent;
+        bottom: 0cm;
+        margin-left: 9cm;
+        margin-right: 9cm;
+        height: 1cm;
+      }
+    }
+
+    :root {
+      --primary-color: #2A3F54;
+      --secondary-color: #20B2AA;
+      --accent-color: #F8F9FA;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #444;
+    }
+
+    .invoice-box {
+      max-width: 800px;
+      margin: auto;
+      padding: 40px 50px;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, .08);
+      border-radius: 12px;
+      background: white;
+    }
+
+    .header {
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 25px;
+      margin-bottom: 30px;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--primary-color);
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--secondary-color);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .info-section {
+      margin-bottom: 30px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .info-card {
+      background: var(--accent-color);
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--secondary-color);
+    }
+
+    .info-card h4 {
+      margin: 0 0 15px 0;
+      color: var(--primary-color);
+      font-size: 16px;
+    }
+
+    .detail-item {
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .detail-item strong {
+      color: var(--primary-color);
+      min-width: 120px;
+      display: inline-block;
+    }
+
+    .charges-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+    }
+
+    .charges-table th {
+      background: var(--primary-color);
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .charges-table td {
+      padding: 12px;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .charges-table tr:nth-child(even) {
+      background-color: var(--accent-color);
+    }
+
+    .total-row {
+      font-weight: 600;
+      color: var(--primary-color);
+      background-color: #fff !important;
+    }
+
+    .watermark {
+      opacity: 0.1;
+      position: absolute;
+      font-size: 120px;
+      color: var(--primary-color);
+      transform: rotate(-30deg);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .dates {
+      color: #6c757d;
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .dates div {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="invoice-box">
+    <div class="watermark">Hospital Management</div>
+    
+    <div class="header">
+      <div class="title">Hospital Management System</div>
+      <div class="dates">
+        <div>Admit Date: {{admitDate}}</div>
+        <div>Release Date: {{releaseDate}}</div>
+        <div>Days Spent: {{daySpent}}</div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Patient Details</h4>
+        <div class="detail-item"><strong>Name:</strong> {{patientName}}</div>
+        <div class="detail-item"><strong>Contact:</strong> {{mobile}}</div>
+        <div class="detail-item"><strong>Address:</strong> {{address}}</div>
+      </div>
+
+      <div class="info-card">
+        <h4>Doctor Details</h4>
+        <div class="detail-item"><strong>Name:</strong> {{assignedDoctorName}}</div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h4 class="subtitle">Medical Details</h4>
+      <div class="info-card">
+        <div class="detail-item"><strong>Disease & Symptoms:</strong></div>
+        <p>{{symptoms}}</p>
+      </div>
+    </div>
+
+    <h4 class="subtitle">Billing Breakdown</h4>
+    <table class="charges-table">
+      <tr>
+        <th>Description</th>
+        <th>Amount</th>
+      </tr>
+      <tr>
+        <td>Room Charge ({{daySpent}} Days)</td>
+        <td>{{roomCharge}}</td>
+      </tr>
+      <tr>
+        <td>Doctor Fee</td>
+        <td>{{doctorFee}}</td>
+      </tr>
+      <tr>
+        <td>Medicine Cost</td>
+        <td>{{medicineCost}}</td>
+      </tr>
+      <tr>
+        <td>Other Charges</td>
+        <td>{{OtherCharge}}</td>
+      </tr>
+      <tr class="total-row">
+        <td>Total Amount</td>
+        <td>{{total}}</td>
+      </tr>
+    </table>
+
+    <div style="text-align: center; margin-top: 30px; color: #6c757d; font-size: 12px;">
+      This is a computer-generated document and does not require a physical signature.
+    </div>
+  </div>
+</body>
+</html>

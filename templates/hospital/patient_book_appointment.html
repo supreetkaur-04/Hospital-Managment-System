@@ -1,0 +1,140 @@
+{% extends 'hospital/patient_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+  <style media="screen">
+    :root {
+      --primary-medical: #2A5C82;
+      --secondary-medical: #1A3A4B;
+      --accent-emergency: #D32F2F;
+      --accent-secondary: #4CAF50;
+      --text-primary: #2D3748;
+      --text-secondary: #718096;
+    }
+
+    .note {
+      text-align: center;
+      height: 90px;
+      background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+      color: white;
+      font-weight: 600;
+      line-height: 90px;
+      border-radius: 12px 12px 0 0;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-content {
+      padding: 2.5rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 2%;
+      background: white;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+      border-radius: 8px;
+      padding: 12px 20px;
+      transition: all 0.3s ease;
+      border: 2px solid #e2e8f0;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-medical);
+      box-shadow: 0 0 0 3px rgba(42, 92, 130, 0.1);
+    }
+
+    .btnSubmit {
+      background: var(--primary-medical);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .btnSubmit:hover {
+      background: var(--secondary-medical);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .container.register-form {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 0 15px;
+    }
+
+    @media (max-width: 768px) {
+      .note {
+        height: 80px;
+        line-height: 80px;
+        font-size: 1.25rem;
+      }
+      
+      .form-content {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<br><br>
+{% if message %}
+<script>
+  var a = "{{message}}";
+  alert(a);
+</script>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+  <div class="container register-form">
+    <div class="form">
+      <div class="note">
+        <p>Schedule New Appointment</p>
+      </div>
+      <div class="form-content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="description">Appointment Details</label>
+              {% render_field appointmentForm.description class="form-control" placeholder="Describe your symptoms or reason for appointment" rows="3" %}
+            </div>
+            <div class="form-group">
+              <label for="doctor">Select Specialist</label>
+              {% render_field appointmentForm.doctorId class="form-control" %}
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btnSubmit">
+          <i class="fas fa-calendar-check mr-2"></i>Book Appointment
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock content %}

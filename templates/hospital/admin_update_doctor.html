@@ -1,0 +1,139 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static widget_tweaks %}
+{% block content %}
+
+<div class="container-fluid px-4" style="padding-top: 30px;">
+  <div class="card shadow-lg border-0">
+    <div class="card-header gradient-bg d-flex justify-content-between align-items-center">
+      <h4 class="mb-0 text-white">
+        <i class="fas fa-user-edit me-3"></i>Update Doctor Profile
+      </h4>
+      <img src="{% static 'images/hospital-logo.png' %}" alt="Hospital Logo" style="height: 40px;">
+    </div>
+    
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        
+        <div class="row g-4">
+          <!-- Left Column -->
+          <div class="col-md-6">
+            <div class="form-floating mb-4">
+              {% render_field userForm.first_name class="form-control" %}
+              <label for="{{ userForm.first_name.id_for_label }}">First Name</label>
+              <div class="invalid-feedback">
+                Please enter first name
+              </div>
+            </div>
+
+            <div class="form-floating mb-4">
+              {% render_field userForm.username class="form-control" %}
+              <label for="{{ userForm.username.id_for_label }}">Username</label>
+              <div class="invalid-feedback">
+                Unique username required
+              </div>
+            </div>
+
+            <div class="form-floating mb-4">
+              {% render_field doctorForm.mobile class="form-control" %}
+              <label for="{{ doctorForm.mobile.id_for_label }}">Contact Number</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              {% render_field doctorForm.department class="form-control" %}
+              <label for="{{ doctorForm.department.id_for_label }}">Department</label>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="col-md-6">
+            <div class="form-floating mb-4">
+              {% render_field userForm.last_name class="form-control" %}
+              <label for="{{ userForm.last_name.id_for_label }}">Last Name</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              {% render_field userForm.password class="form-control" placeholder="Password" %}
+              <label for="{{ userForm.password.id_for_label }}">Password</label>
+              <small class="text-muted">Leave blank to keep current password</small>
+            </div>
+
+            <div class="form-floating mb-4">
+              {% render_field doctorForm.address class="form-control" style="height: 100px" %}
+              <label for="{{ doctorForm.address.id_for_label }}">Address</label>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Profile Picture</label>
+              <div class="custom-file">
+                {% render_field doctorForm.profile_pic class="custom-file-input" %}
+                <label class="custom-file-label" for="{{ doctorForm.profile_pic.id_for_label }}">
+                  Choose file...
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+          <button type="submit" class="btn btn-primary-medical px-5 py-2">
+            <i class="fas fa-save me-2"></i>Update Profile
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+    border-radius: 12px 12px 0 0 !important;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: var(--primary-medical);
+    box-shadow: 0 0 0 0.25rem rgba(42, 92, 130, 0.25);
+  }
+
+  .custom-file-input:hover ~ .custom-file-label {
+    border-color: var(--primary-medical);
+  }
+
+  .btn-primary-medical {
+    background-color: var(--primary-medical);
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary-medical:hover {
+    background-color: var(--secondary-medical);
+    transform: translateY(-2px);
+  }
+</style>
+
+<script>
+  // Bootstrap form validation
+  (function () {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
+{% endblock content %}

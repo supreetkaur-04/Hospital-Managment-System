@@ -1,0 +1,156 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+  <style>
+    :root {
+      --primary-medical: #2A5C82;
+      --secondary-medical: #1A3A4B;
+      --accent-emergency: #D32F2F;
+      --accent-secondary: #4CAF50;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      padding-top: 80px; /* Offset for fixed navbar */
+      background: linear-gradient(rgba(242, 247, 249, 0.9), 
+                  rgba(242, 247, 249, 0.9)),
+                  url("{{ bg_image_url }}");
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+    .register-form {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .form-header {
+      background: var(--primary-medical);
+      color: white;
+      border-radius: 15px 15px 0 0;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .form-header h3 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .form-content {
+      padding: 40px;
+      border-radius: 0 0 15px 15px;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+      border: none;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      padding: 15px 20px;
+      border: 2px solid #e0e6ef;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-medical);
+      box-shadow: 0 0 0 3px rgba(42, 92, 130, 0.1);
+    }
+
+    .input-icon {
+      position: relative;
+    }
+
+    .input-icon i {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-medical);
+      z-index: 2;
+    }
+
+    .input-icon input,
+    .input-icon select {
+      padding-left: 50px !important;
+    }
+
+    .btn-submit {
+      background: var(--primary-medical);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(42, 92, 130, 0.3);
+      background: var(--secondary-medical);
+    }
+
+    @media (max-width: 768px) {
+      .register-form {
+        padding: 15px;
+      }
+      .form-content {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<div class="register-form">
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-header">
+      <h3>Book New Appointment</h3>
+    </div>
+    <div class="form-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group input-icon">
+            <i class="fas fa-file-medical"></i>
+            {% render_field appointmentForm.description class="form-control" placeholder="Appointment Description" %}
+          </div>
+
+          <div class="form-group input-icon">
+            <i class="fas fa-user-md"></i>
+            {% render_field appointmentForm.doctorId class="form-control" %}
+          </div>
+
+          <div class="form-group input-icon">
+            <i class="fas fa-hospital-user"></i>
+            {% render_field appointmentForm.patientId class="form-control" %}
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <i class="fas fa-calendar-check mr-2"></i>Book Appointment
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Required Scripts -->
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+{% endblock content %}

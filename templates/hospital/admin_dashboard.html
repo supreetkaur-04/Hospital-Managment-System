@@ -1,0 +1,129 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid px-4" style="padding-top: 30px;">
+  {% include 'hospital/admin_dashboard_cards.html' %}
+  
+  <div class="row g-4 mt-1">
+    <!-- Recent Doctors Card -->
+    <div class="col-xxl-6 col-md-6">
+      <div class="card shadow-lg border-0 h-100">
+        <div class="card-header gradient-bg">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-white">
+              <i class="fas fa-user-md me-2"></i>Recent Doctors
+            </h5>
+            <span class="badge bg-light text-primary">{{ doctors|length }}</span>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="ps-4">Name</th>
+                  <th>Department</th>
+                  <th>Contact</th>
+                  <th class="text-end pe-4">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for d in doctors %}
+                <tr>
+                  <td class="ps-4 fw-medium">{{ d.get_name }}</td>
+                  <td><span class="badge bg-primary-medical">{{ d.department }}</span></td>
+                  <td>{{ d.mobile }}</td>
+                  <td class="text-end pe-4">
+                    {% if d.status %}
+                    <span class="badge bg-success bg-opacity-10 text-success">Active</span>
+                    {% else %}
+                    <span class="badge bg-warning bg-opacity-10 text-warning">On Hold</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if not doctors %}
+            <div class="text-center p-5">
+              <i class="fas fa-user-md fa-3x text-muted mb-3"></i>
+              <h6 class="text-muted">No recent doctor activity</h6>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Patients Card -->
+    <div class="col-xxl-6 col-md-6">
+      <div class="card shadow-lg border-0 h-100">
+        <div class="card-header gradient-bg">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-white">
+              <i class="fas fa-procedures me-2"></i>Recent Patients
+            </h5>
+            <span class="badge bg-light text-primary">{{ patients|length }}</span>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="ps-4">Name</th>
+                  <th>Symptoms</th>
+                  <th>Contact</th>
+                  <th>Address</th>
+                  <th class="text-end pe-4">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in patients %}
+                <tr>
+                  <td class="ps-4 fw-medium">{{ p.get_name }}</td>
+                  <td class="text-truncate" style="max-width: 150px;">{{ p.symptoms }}</td>
+                  <td>{{ p.mobile }}</td>
+                  <td class="text-truncate" style="max-width: 150px;">{{ p.address }}</td>
+                  <td class="text-end pe-4">
+                    {% if p.status %}
+                    <span class="badge bg-success bg-opacity-10 text-success">Admitted</span>
+                    {% else %}
+                    <span class="badge bg-warning bg-opacity-10 text-warning">Pending</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if not patients %}
+            <div class="text-center p-5">
+              <i class="fas fa-hospital-user fa-3x text-muted mb-3"></i>
+              <h6 class="text-muted">No recent patient admissions</h6>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gradient-bg {
+    background: linear-gradient(180deg, var(--primary-medical), var(--secondary-medical));
+    border-radius: 12px 12px 0 0 !important;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(42, 92, 130, 0.03);
+  }
+  
+  .badge.bg-primary-medical {
+    background-color: var(--primary-medical);
+    color: white;
+  }
+</style>
+
+{% endblock content %}

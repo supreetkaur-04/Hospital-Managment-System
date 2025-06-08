@@ -1,0 +1,119 @@
+{% extends 'hospital/doctor_base.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <style>
+    .appointment-card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(42, 92, 130, 0.1);
+      overflow: hidden;
+    }
+
+    .card-header {
+      background-color: var(--primary-medical);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px 12px 0 0 !important;
+    }
+
+    .table-custom {
+      margin-bottom: 0;
+    }
+
+    .table-custom thead th {
+      background-color: var(--secondary-medical);
+      color: white;
+      border-bottom: none;
+      padding: 1rem 1.5rem;
+    }
+
+    .table-custom tbody td {
+      padding: 1.2rem 1.5rem;
+      vertical-align: middle;
+      border-top: 1px solid #f0f4f8;
+    }
+
+    .profile-img-table {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-medical);
+    }
+
+    .status-badge {
+      padding: 0.4em 0.8em;
+      border-radius: 20px;
+      font-size: 0.85em;
+    }
+
+    .table-hover tbody tr:hover {
+      background-color: #f8fafc;
+      transform: translateX(4px);
+      transition: all 0.2s ease;
+    }
+  </style>
+</head>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="appointment-card">
+        <div class="card-header">
+          <h5 class="mb-0">Your Appointments</h5>
+          <p class="mb-0 small opacity-75">Recent patient appointments list</p>
+        </div>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Profile</th>
+                <th>Details</th>
+                <th>Contact Info</th>
+                <th>Appointment Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a,p in appointments %}
+              <tr>
+                <td class="font-weight-bold">{{a.patientName}}</td>
+                <td>
+                  <img src="{% static p.profile_pic.url %}" 
+                       class="profile-img-table" 
+                       alt="Patient Profile">
+                </td>
+                <td>
+                  <div class="d-flex flex-column">
+                    <span class="small text-muted mb-1">Symptoms:</span>
+                    <span>{{a.description}}</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex flex-column">
+                    <span class="small text-muted mb-1">Phone:</span>
+                    <span>{{p.mobile}}</span>
+                    <span class="small text-muted mt-2">Address:</span>
+                    <span class="small">{{p.address}}</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex flex-column">
+                    <span class="small text-muted mb-1">Scheduled:</span>
+                    <span class="font-weight-bold">{{a.appointmentDate}}</span>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

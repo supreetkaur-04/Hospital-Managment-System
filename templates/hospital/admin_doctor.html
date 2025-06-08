@@ -1,0 +1,141 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid px-4" style="padding-top: 30px;">
+  <div class="card shadow-lg border-0 mb-5">
+    <div class="card-header gradient-bg">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h2 class="text-white mb-0"><i class="fas fa-clipboard-list me-3"></i>Hospital Administration Dashboard</h2>
+          <p class="text-light mb-0">Comprehensive healthcare management interface</p>
+        </div>
+        <img src="{% static 'images/hospital-logo.png' %}" alt="Hospital Logo" style="height: 50px;">
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <div class="row g-4">
+        <!-- Medical Staff Card -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card stat-card border-0 h-100">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="icon-square bg-primary-medical text-white rounded-circle me-3">
+                  <i class="fas fa-user-md fa-2x"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0">MEDICAL STAFF</h6>
+                  <span class="text-muted small">Active Physicians</span>
+                </div>
+              </div>
+              <h2 class="fw-bold text-primary-medical">142</h2>
+              <a href="/admin-view-doctor" class="btn btn-link text-primary-medical p-0">
+                Manage Staff <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Registrations Card -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card stat-card border-0 h-100">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="icon-square bg-accent-emergency text-white rounded-circle me-3">
+                  <i class="fas fa-user-plus fa-2x"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0">REGISTRATIONS</h6>
+                  <span class="text-muted small">Pending Approvals</span>
+                </div>
+              </div>
+              <h2 class="fw-bold text-accent-emergency">8</h2>
+              <a href="/admin-add-doctor" class="btn btn-link text-accent-emergency p-0">
+                Add Practitioner <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Approvals Card -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card stat-card border-0 h-100">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="icon-square bg-success text-white rounded-circle me-3">
+                  <i class="fas fa-check-double fa-2x"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0">APPROVALS</h6>
+                  <span class="text-muted small">Pending Requests</span>
+                </div>
+              </div>
+              <h2 class="fw-bold text-success">3</h2>
+              <a href="/admin-approve-doctor" class="btn btn-link text-success p-0">
+                Review Requests <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Specializations Card -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card stat-card border-0 h-100">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="icon-square bg-secondary-medical text-white rounded-circle me-3">
+                  <i class="fas fa-clinic-medical fa-2x"></i>
+                </div>
+                <div>
+                  <h6 class="mb-0">SPECIALTIES</h6>
+                  <span class="text-muted small">Active Departments</span>
+                </div>
+              </div>
+              <h2 class="fw-bold text-secondary-medical">15</h2>
+              <a href="/admin-view-doctor-specialisation" class="btn btn-link text-secondary-medical p-0">
+                View Specialties <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .stat-card {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    background: var(--light-bg);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(42, 92, 130, 0.1);
+  }
+
+  .icon-square {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--primary-medical), var(--secondary-medical));
+  }
+
+  .btn-link {
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-link:hover {
+    letter-spacing: 0.5px;
+  }
+</style>
+
+{% endblock content %}

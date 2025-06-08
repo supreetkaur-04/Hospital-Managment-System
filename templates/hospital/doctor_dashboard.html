@@ -1,0 +1,155 @@
+{% extends 'hospital/doctor_base.html' %}
+{% load static %}
+{% block content %}
+{% include 'hospital/doctor_dashboard_cards.html' %}
+<br><br><br><br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="medical-panel">
+        <div class="medical-panel-header">
+          <h4 class="mb-0">Your Recent Appointments</h4>
+          <small class="text-light">Active patient consultations</small>
+        </div>
+        
+        <div class="table-medical">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Profile</th>
+                <th>Symptoms</th>
+                <th>Contact</th>
+                <th>Location</th>
+                <th>Appointment Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a,p in appointments %}
+              <tr>
+                <td class="fw-500">{{a.patientName}}</td>
+                <td>
+                  {% if p.profile_pic and p.profile_pic.name %}
+                    <img src="{{ p.profile_pic.url }}" class="profile-img rounded-circle">
+                  {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" class="profile-img rounded-circle">
+                  {% endif %}
+                </td>
+                <td class="text-secondary">
+                  <div class="text-truncate medical-description">
+                    {{a.description}}
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-phone medical-icon me-2"></i>
+                    {{p.mobile}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-truncate medical-address">
+                    {{p.address}}
+                  </div>
+                </td>
+                <td>
+                  <div class="medical-date">
+                    <i class="fas fa-calendar-day me-2"></i>
+                    {{a.appointmentDate}}
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="medical-panel-footer">
+          Showing {{ appointments|length }} records
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.medical-panel {
+    border: 1px solid rgba(42, 92, 130, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+}
+
+.medical-panel-header {
+    background: var(--primary-medical);
+    padding: 1.25rem 1.5rem;
+    color: white;
+}
+
+.medical-panel-header h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.table-medical {
+    background: white;
+}
+
+.table-medical thead {
+    background: rgba(42, 92, 130, 0.05);
+}
+
+.table-medical th {
+    font-weight: 600;
+    color: var(--primary-medical);
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid rgba(42, 92, 130, 0.1);
+}
+
+.table-medical td {
+    padding: 1rem 1.5rem;
+    vertical-align: middle;
+    border-color: rgba(42, 92, 130, 0.05);
+}
+
+.medical-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-medical);
+}
+
+.medical-icon {
+    color: var(--primary-medical);
+    font-size: 0.9rem;
+}
+
+.medical-date {
+    color: var(--secondary-medical);
+    font-weight: 500;
+}
+
+.medical-panel-footer {
+    background: rgba(42, 92, 130, 0.03);
+    padding: 0.75rem 1.5rem;
+    color: var(--secondary-medical);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .table-medical {
+        overflow-x: auto;
+        display: block;
+        width: 100%;
+    }
+    
+    .medical-panel-header,
+    .medical-panel-footer {
+        padding: 1rem;
+    }
+}
+</style>
+
+{% endblock content %}

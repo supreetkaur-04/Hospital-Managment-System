@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Statistics</title>
+  
+  <style>
+    :root {
+      --primary-medical: #2A5C82;
+      --secondary-medical: #1A3A4B;
+      --accent-emergency: #D32F2F;
+      --accent-secondary: #4CAF50;
+      --text-primary: #2D3748;
+      --text-secondary: #718096;
+    }
+
+    .stats-container {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 1rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 12px 24px rgba(42, 92, 130, 0.08);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(42, 92, 130, 0.1);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--primary-medical);
+      opacity: 0.8;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(42, 92, 130, 0.12);
+    }
+
+    .stat-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .stat-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary-medical) 0%, var(--secondary-medical) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 8px 16px rgba(42, 92, 130, 0.15);
+    }
+
+    .stat-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .stat-value {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 2.75rem;
+      color: var(--primary-medical);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .stat-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 240px;
+    }
+
+    .stat-trend {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-secondary);
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-card {
+        padding: 2rem;
+      }
+      
+      .stat-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.75rem;
+      }
+      
+      .stat-value {
+        font-size: 2.25rem;
+      }
+    }
+  </style>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="stats-container">
+    <div class="stats-grid">
+      <!-- Appointments Card -->
+      <div class="stat-card">
+        <div class="stat-content">
+          <div class="stat-header">
+            <div class="stat-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-metrics">
+              <div class="stat-value">{{appointmentcount}}</div>
+              <div class="stat-title">Appointments</div>
+            </div>
+          </div>
+          <div class="stat-subtitle">Scheduled patient consultations with priority status monitoring</div>
+          <div class="stat-trend">
+            <i class="fas fa-chart-line"></i>
+            <span>+12% from last month</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Patients Card -->
+      <div class="stat-card">
+        <div class="stat-content">
+          <div class="stat-header">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #4CAF50 0%, #2A5C82 100%);">
+              <i class="fas fa-user-injured"></i>
+            </div>
+            <div class="stat-metrics">
+              <div class="stat-value">{{patientcount}}</div>
+              <div class="stat-title">Active Patients</div>
+            </div>
+          </div>
+          <div class="stat-subtitle">Patients currently under your care with ongoing treatment plans</div>
+          <div class="stat-trend">
+            <i class="fas fa-bed"></i>
+            <span>5 in critical care</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discharged Card -->
+      <div class="stat-card">
+        <div class="stat-content">
+          <div class="stat-header">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #D32F2F 0%, #2A5C82 100%);">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-metrics">
+              <div class="stat-value">{{patientdischarged}}</div>
+              <div class="stat-title">Successful Discharges</div>
+            </div>
+          </div>
+          <div class="stat-subtitle">Patients successfully treated and discharged this quarter</div>
+          <div class="stat-trend">
+            <i class="fas fa-star"></i>
+            <span>98% satisfaction rate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
